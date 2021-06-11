@@ -12,6 +12,7 @@ public class Ticket implements Serializable {
     private double price ;
     public TicketType type;
     private LocalDateTime creationDate;
+    public boolean marker = false;
     private static final long serialVersionUID = 18L;
 
     public Ticket(Integer id, String name, Coordinates coordinates, Event e, double price, String t, LocalDateTime creationDate) {//, , TicketType t
@@ -62,30 +63,31 @@ public class Ticket implements Serializable {
         }
 
     }
-
-
+    public Ticket(boolean marker) {
+        super();
+        this.marker = marker;
+    }
     public Integer getId() {
         return id;
     }
-
     public double getPrice(){
         return price;
     }
-
     public String getName() {
         return name;
     }
-
+    public boolean getMarker() {return marker; }
     public java.time.LocalDateTime getCreationDate() {
         return creationDate;
     }
-
     public Coordinates getCoords() {
         coordinates.getX();
         coordinates.getY();
         return coordinates;
     }
-
+    public TicketType getType(){
+        return type;
+    }
     public Event getEvent(){
         event.getEventType();
         event.getIdTicket();
@@ -94,7 +96,19 @@ public class Ticket implements Serializable {
         event.getTicketsCount();
         return event;
     }
-
+    public void setId(Integer id){
+        this.id = id;
+    }
+    public void update(Ticket ticket){
+        this.id = ticket.getId();
+        this.name = ticket.getName();
+        this.coordinates = ticket.getCoords();
+        this.event = ticket.getEvent();
+        this.type = ticket.getType();
+        this.creationDate = ticket.getCreationDate();
+        this.price = ticket.getPrice();
+        this.price = ticket.getPrice();
+    }
     @Override
     public String toString() {
         return "["+id+" " +name+" " + " "+coordinates.getX()+" "+ coordinates.getY()+" " + " " +event.getIdTicket() + " " + event.getNameTicket() + " " + event.getMinAge()+ " " + event.getTicketsCount() + " " + event.getEventType() + " " + price + " "+ type + "]";
