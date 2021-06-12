@@ -1,21 +1,11 @@
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-// в зависимости от типа Commandtype выполняет функцию какой то команды
+
 public class Commander {
     String argument = "";
     Vector<Ticket> TicketCollection;
@@ -75,21 +65,21 @@ public class Commander {
 
     public void help() throws IOException {
         logger.info("'help' command was detected");
-        outputStream.writeUTF("-help : вывести справку по доступным командам\n" +
-                "-info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)\n" +
-                "-show : вывести в стандартный поток вывода все элементы коллекции в строковом представлении\n" +
-                "-add {element} : добавить новый элемент в коллекцию\n"+
-                "-update id {element} : обновить значение элемента коллекции, id которого равен заданному\n"+
-                "-remove id : удалить элемент из коллекции по его id\n" +
-                "-clear : очистить коллекцию\n"+  "-exit : закончить сессию\n" +
-                "-save : сохранить коллекцию в файл\n"+
+        outputStream.writeUTF("help : вывести справку по доступным командам\n" +
+                "info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)\n" +
+                "show : вывести в стандартный поток вывода все элементы коллекции в строковом представлении\n" +
+                "add {element} : добавить новый элемент в коллекцию\n"+
+                "update id {element} : обновить значение элемента коллекции, id которого равен заданному\n"+
+                "remove_by_id : удалить элемент из коллекции по его id\n" +
+                "clear : очистить коллекцию\n"+  "exit : закончить сессию\n" +
+                "save : сохранить коллекцию в файл\n"+
                 "execute_script file_name : считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.\n"+
                 "insert_at index {element} : добавить новый элемент в заданную позицию\n"+
-                "-add_if_min {element} : добавить новый элемент в коллекцию, если его значение меньше, чем у наименьшего элемента этой коллекции\n"+
-                "-shuffle : перемешать элементы коллекции в случайном порядке\n"+
-                "-average_of_price : вывести среднее значение поля price для всех элементов коллекции\n"+
-                "-count_by_price price : вывести количество элементов, значение поля price которых равно заданному\n"+
-                "-print_unique_event : вывести уникальные значения поля event всех элементов в коллекции\n");
+                "add_if_min {element} : добавить новый элемент в коллекцию, если его значение меньше, чем у наименьшего элемента этой коллекции\n"+
+                "shuffle : перемешать элементы коллекции в случайном порядке\n"+
+                "average_of_price : вывести среднее значение поля price для всех элементов коллекции\n"+
+                "count_by_price price : вывести количество элементов, значение поля price которых равно заданному\n"+
+                "print_unique_event : вывести уникальные значения поля event всех элементов в коллекции\n");
     }
     public void info() throws IOException {
         logger.info("'info' command was detected");
@@ -141,6 +131,7 @@ public class Commander {
         outputStream.writeUTF("new Ticket element was added");
         logger.info("Answer was sent");
     }
+
     public void remove_by_id() throws IOException {
         logger.info("'remove_by_id' command was detected");
         try {
@@ -221,7 +212,6 @@ public class Commander {
     public void count_by_price() throws IOException {
         try {
             double arg_price = Double.parseDouble(argument);
-            int num = 0;
             if (TicketCollection.stream().map(Ticket::getPrice).anyMatch(price -> price == arg_price)) {
                 double output = TicketCollection.stream().filter(d -> d.getPrice() == arg_price).count();
                 String nums = Double.toString(output);
@@ -293,7 +283,7 @@ public class Commander {
     }
 
     public enum CommandType {
-        help,info,show,add, update,remove_by_id,clear,save,insert_at,add_if_min,
-        shuffle,average_price,count_by_price,print_unique_event , exit,  mode
+        help,info,show,add, update,remove_by_id,clear,save,insert_at,execute_script, add_if_min,
+        shuffle,average_price,count_by_price,print_unique_event ,exit, mode
     }
 }

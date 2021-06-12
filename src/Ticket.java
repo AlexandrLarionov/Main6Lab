@@ -15,6 +15,15 @@ public class Ticket implements Serializable {
     public boolean marker = false;
     private static final long serialVersionUID = 18L;
 
+    public Ticket(){
+        this.id = 1;
+        this.name = "default";
+        this.coordinates = new Coordinates(1.0, 5L);
+        this.event = new Event();
+        this.price = 1;
+        this.creationDate = LocalDateTime.now();
+        this.type = TicketType.USUAL;
+    }
     public Ticket(Integer id, String name, Coordinates coordinates, Event e, double price, String t, LocalDateTime creationDate) {//, , TicketType t
         this.id = id;
         if (id == null) this.id = new Random().nextInt();
@@ -122,6 +131,13 @@ class Event implements Serializable{
     private EventType eventType;
     private static final long serialVersionUID = 18L;
 
+    public Event(){
+        this.id = 1;
+        this.name = "name";
+        this.minAge = 1;
+        this.ticketsCount =1;
+        this.eventType = EventType.OPERA;
+    }
     public Event(Integer id, String name, int minAge, long ticketsCount, String s){
         this.id = id;
         if (id == null) this.id = new Random().nextInt();
@@ -165,8 +181,8 @@ class Event implements Serializable{
     public Integer getIdTicket(){return id;}
     public String getNameTicket(){return name;}
     public Integer getMinAge(){return minAge;}
+    public int getMinAge2(){return minAge;}
     public Long getTicketsCount(){return ticketsCount;}
-
     public EventType getEventType() {
         return eventType;
     }
